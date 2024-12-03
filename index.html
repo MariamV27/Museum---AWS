@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum highlights</title>
+    <style>
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            background-color: #f5e6d3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        h1 {
+            color: #6b4423;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        #definition {
+            background-color: #f0e4d1;
+            border: 2px solid #8b4513;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            font-size: 1.2em;
+            color: #4a3128;
+            width: 80%;
+            max-width: 600px;
+            transition: background-color 0.3s;
+        }
+
+        #definition:hover {
+            background-color: #e6d8c3;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #f0e4d1;
+            background-color: #8b4513;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5d2e0e;
+        }
+
+        h3 {
+            color: #6b4423;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Museum highlights</h1>
+    <div id="definition">Loading...</div>
+    <button onclick="fetchDefinition()">Get Another Museum</button>
+    <h3>By Mariam</h3>
+
+    <script>
+      
+      async function fetchDefinition() {
+    try {
+        const response = await fetch('https://pt4vvp9t38.execute-api.us-east-1.amazonaws.com/prod/quote', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+
+        const responseData = await response.json(); // Parseamos la respuesta completa
+        const data = JSON.parse(responseData.body); // Ahora parseamos el campo 'body' que está como cadena JSON
+
+        console.log(data); // Verifica la estructura de los datos después de parsearlos
+
+        // Construye dinámicamente la información del museo
+        const museumInfo = Object.entries(data)
+            .map(([key, value]) => `<strong>${key}:</strong> ${value}<br>`)
+            .join('');
+
+        // Actualiza el contenido del div con ID 'definition'
+        document.getElementById('definition').innerHTML = museumInfo;
+    } catch (error) {
+        console.error('Error fetching the museum data:', error);
+        document.getElementById('definition').innerText = 'Error loading data.';
+    }
+}
+
+window.onload = fetchDefinition;
+
+
+    </script>
+</body>
+</html>

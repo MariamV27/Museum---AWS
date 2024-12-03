@@ -1,41 +1,37 @@
 import json
 import random
-import boto3from boto3.dynamodb.conditions import Key
+import boto3
 
-#Initialize the DynamoDB resource
+# Inicializa el recurso DynamoDB
+dynamodb = boto3.resource('dynamodb')
 
-dynamodb = boto.3.resource('dynamodb')
-
-# Name of your DynamoDB resource
-
-table_name  = 'museumTitles'
-table dynamodb.Table(table_name)
-
+# Nombre de la tabla DynamoDB
+table_name = 'museumTitles'
+table = dynamodb.Table(table_name)
 
 def lambda_handler(event, context):
     try:
-        # Fetch all cloud definitions from DynamoDB
+        # Escanea la tabla para obtener todos los registros
         response = table.scan()
         items = response.get('Items', [])
         
         if not items:
             return {
                 'statusCode': 404,
-                'body': json.dumps({'error': 'No definitions found.'}),
+                'body': json.dumps({'error': 'No museum data found.'}),
                 'headers': {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 }
             }
         
-        # Pick a random cloud definition
-        random_definition = random.choice(items)
-        definition_text = random_definition.get('definition', 'No definition available')
-
-        # Return the random definition
+        # Selecciona un museo al azar
+        random_museum = random.choice(items)
+        
+        # Devuelve toda la información del museo
         return {
             'statusCode': 200,
-            'body': json.dumps({'definition': definition_text}),
+            'body': json.dumps(random_museum),  # Envía todo el objeto del museo
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
@@ -43,7 +39,7 @@ def lambda_handler(event, context):
         }
 
     except Exception as e:
-        # Handle any errors that occur
+        # Maneja cualquier error
         return {
             'statusCode': 500,
             'body': json.dumps({'error': str(e)}),
