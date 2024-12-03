@@ -1,6 +1,6 @@
 # Museum - AWS
 
-![portada](/Museum---AWS/museum.png)
+![portada](museum.png)
 
 In this project, I created a web application that fetches featured museums from different countries. It traverses the cloud using AWS API Gateway and DynamoDB. This project demonstrates how to leverage cloud technologies to serve dynamic content in a user-friendly way. 
 
