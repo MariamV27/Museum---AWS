@@ -7,7 +7,7 @@ In this project, I created a web application that fetches featured museums from 
 
 Architecture Diagram
 
-![portada](/Museum---AWS/Screenshot%202024-12-02%20at%2013.20.37.png)
+![portada](Screenshot%202024-12-02%20at%2013.20.37.png)
 
 Explanation of the steps
 
@@ -24,4 +24,4 @@ Implementation:
 In the final result, we can see how the web uses the resources of Lambda, DynamoDB
 
 
-![enter image description here](/Museum---AWS/video1803328522.gif)
+![enter image description here](Museum---AWS/video1803328522.gif)
