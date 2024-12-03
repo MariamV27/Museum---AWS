@@ -24,4 +24,4 @@ Implementation:
 In the final result, we can see how the web uses the resources of Lambda, DynamoDB
 
 
-![enter image description here](Museum---AWS/video1803328522.gif)
+![enter image description here](video1803328522.gif)
